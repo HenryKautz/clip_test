@@ -9,7 +9,11 @@ Usage:
     (then type a sentence and press Enter)
 """
 
+import os
 import sys
+
+os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
+
 import torch
 from PIL import Image
 from transformers import CLIPModel, CLIPProcessor
@@ -37,7 +41,7 @@ def main():
         sys.exit(1)
 
     print(f"Loading model {MODEL_NAME}...", file=sys.stderr)
-    processor = CLIPProcessor.from_pretrained(MODEL_NAME)
+    processor = CLIPProcessor.from_pretrained(MODEL_NAME, use_fast=True)
     model = CLIPModel.from_pretrained(MODEL_NAME)
     model.eval()
 
